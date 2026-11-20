@@ -1,48 +1,63 @@
 ﻿using BudgetPlanner.Models;
-using System.Diagnostics;
+using BudgetPlanner.Models.Enums;
 
-DebitCard card1 = new DebitCard
+Income salary = new Income
 {
-    CardName = "Main",
-    Amount = 1000,
+    Name = "Зарплата",
+    Amount = 60000m,
+    Frequency = IncomeFrequency.BiWeekly,
+    StartDate = new DateTime(2026, 11, 20),
+    EndDate = null,
+    IsExpected = false
 };
 
-DebitCard card2 = new DebitCard
+Income bonus = new Income
 {
-    CardName = "Support",
-    Amount = 100,
+    Name = "Премия",
+    Amount = 15000m,
+    Frequency = IncomeFrequency.Once,
+    StartDate = new DateTime(2026, 12, 25),
+    IsExpected = true
 };
 
-CreditCard credit1 = new CreditCard
+salary.AmountChanges.Add(new IncomeAmountChange
 {
-    CardName = "Bank1",
-   CreditLimit = 10000,
-   Debt = 1000,
-};
+    Amount = 100500,
+    EffectiveDate = new DateTime(2026, 12, 1)
+}); 
 
-CreditCard credit2 = new CreditCard
+salary.AmountChanges.Add(new IncomeAmountChange
 {
-    CardName = "Bank2",
-    CreditLimit = 1000,
-    Debt = 999,
-};
+    Amount = 120000,
+    EffectiveDate = new DateTime(2026, 12, 31)
+});
 
-Cash homeCash = new("My home", 111);
+salary.AmountChanges.Add(new IncomeAmountChange
+{
+    Amount = 200000,
+    EffectiveDate = new DateTime(2027, 02, 01)
+});
 
-Funds account1 = new Funds();
+salary.AmountChanges.Add(new IncomeAmountChange
+{
+    Amount = 150000,
+    EffectiveDate = new DateTime(2027, 03, 03)
+});
 
-account1.DebitCards.Add(card1);
-account1.DebitCards.Add(card2);
+Console.WriteLine($"{salary.Name}: {salary.Amount} ₽");
+Console.WriteLine($"Периодичность: {salary.Frequency}");
+Console.WriteLine($"Начало: {salary.StartDate:d}");
+Console.WriteLine($"История изменеий: {salary.AmountChanges.Count}\n");
 
-account1.CreditCards.Add(credit1);
-account1.CreditCards.Add(credit2);
+DateTime date = DateTime.Now;
 
-account1.Cashes.Add(homeCash);
+for ( int i = 0; i < 10; i++)
+{
+    date = date.AddMonths(1);
+    Console.WriteLine($"Зарплата на {date}: {salary.GetAmountForDate(date)}");
+}
 
-account1.IncludeCredit = true;
+Console.WriteLine();
 
-Debug.WriteLine($"Наличные: {account1.CashBalance}");
-Debug.WriteLine($"Дебетовые: {account1.DebitBalance} ₽");
-Debug.WriteLine($"Кредитные: {account1.AvailableCredit} ₽");
-Debug.WriteLine($"Свои средства: {account1.OwnFunds} ₽");
-Debug.WriteLine($"Общее: {account1.TotalAvailable} ₽");
+Console.WriteLine($"{bonus.Name}: {bonus.Amount} ₽");
+Console.WriteLine($"Ожидаемый: {bonus.IsExpected}");
