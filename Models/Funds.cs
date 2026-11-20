@@ -8,5 +8,5 @@ public class Funds
 
     public decimal OwnFunds => Accounts.Sum(a => a.Balance);
     public decimal AvailableCredit => CreditCards.Sum(card => card.AvailableCredit);
-    public decimal TotalFunds => OwnFunds + (AvailableCredit > 0? AvailableCredit : 0);
+    public decimal TotalAvailable => OwnFunds + (AvailableCredit > 0? AvailableCredit : 0);
 }

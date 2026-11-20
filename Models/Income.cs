@@ -10,7 +10,6 @@ public class Income
     public IncomeFrequency Frequency { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
-    public bool IsExpected { get; set; }
 
     public List<IncomeAmountChange> AmountChanges { get; set; } = new();
 

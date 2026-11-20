@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.Models;
+﻿/*using BudgetPlanner.Models;
 using System.Diagnostics;
 
 FinancialAccount tAccount = new FinancialAccount
@@ -12,7 +12,7 @@ FinancialAccount wallet = new FinancialAccount
 {
     Name = "My wallet",
     Type = BudgetPlanner.Models.Enums.FinancialAccountType.Cash,
-    Balance = 2000,
+    Balance = 0,
 };
 
 DebitCard dCard = new DebitCard
@@ -47,7 +47,7 @@ Console.WriteLine("\n");
 Console.WriteLine($"Имя второго счета {wallet.Name}");
 Console.WriteLine($"Тип второго счета {wallet.Type}");
 Console.WriteLine($"ИД второго счета {wallet.Id}");
-Console.WriteLine($"Балланс второго счета {wallet.Balance}");
+Console.WriteLine($"Балланс второго счета {wallet.Balance} здесь в прошлый раз было -2000");
 
 Console.WriteLine("\n");
 
@@ -59,3 +59,4 @@ Console.WriteLine("\n");
 Console.WriteLine($"Количество счетов {funds.Accounts.Count}"); 
 Console.WriteLine($"Количество дебетовых карт {funds.DebitCards.Count}"); 
 Console.WriteLine($"Количество кредитных карт {funds.CreditCards.Count}"); 
+*/
