@@ -1,6 +1,7 @@
 namespace BudgetPlanner.Models;
 
-public class DebitCard(string cardName = "Unnamed") : Card(cardName)
+public class DebitCard
 {
-    public decimal Amount { get; set; } = 0;
+    public string Name { get; set; } = "Debit";
+    public Guid? AccountId { get; set; }
 }

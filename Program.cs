@@ -1,63 +1,54 @@
 ﻿using BudgetPlanner.Models;
-using BudgetPlanner.Models.Enums;
+using System.Diagnostics;
 
-Income salary = new Income
+FinancialAccount tAccount = new FinancialAccount
 {
-    Name = "Зарплата",
-    Amount = 60000m,
-    Frequency = IncomeFrequency.BiWeekly,
-    StartDate = new DateTime(2026, 11, 20),
-    EndDate = null,
-    IsExpected = false
+    Name = "T-Bank main",
+    Type = BudgetPlanner.Models.Enums.FinancialAccountType.Bank,
+    Balance = 1000,
 };
 
-Income bonus = new Income
+FinancialAccount wallet = new FinancialAccount
 {
-    Name = "Премия",
-    Amount = 15000m,
-    Frequency = IncomeFrequency.Once,
-    StartDate = new DateTime(2026, 12, 25),
-    IsExpected = true
+    Name = "My wallet",
+    Type = BudgetPlanner.Models.Enums.FinancialAccountType.Cash,
+    Balance = 2000,
 };
 
-salary.AmountChanges.Add(new IncomeAmountChange
+DebitCard dCard = new DebitCard
 {
-    Amount = 100500,
-    EffectiveDate = new DateTime(2026, 12, 1)
-}); 
+    Name = "T-Debit",
+    AccountId = tAccount.Id,
+};
 
-salary.AmountChanges.Add(new IncomeAmountChange
+CreditCard cCard = new CreditCard
 {
-    Amount = 120000,
-    EffectiveDate = new DateTime(2026, 12, 31)
-});
+    Name = "T-credit",
+    AccountId = tAccount.Id,
+    CreditLimit = 10000,
+    Debt = 0,
+};
 
-salary.AmountChanges.Add(new IncomeAmountChange
-{
-    Amount = 200000,
-    EffectiveDate = new DateTime(2027, 02, 01)
-});
+Funds funds = new Funds();
 
-salary.AmountChanges.Add(new IncomeAmountChange
-{
-    Amount = 150000,
-    EffectiveDate = new DateTime(2027, 03, 03)
-});
+funds.accounts.Add(wallet);
+funds.accounts.Add(tAccount);
 
-Console.WriteLine($"{salary.Name}: {salary.Amount} ₽");
-Console.WriteLine($"Периодичность: {salary.Frequency}");
-Console.WriteLine($"Начало: {salary.StartDate:d}");
-Console.WriteLine($"История изменеий: {salary.AmountChanges.Count}\n");
+funds.CreditCards.Add(cCard);
 
-DateTime date = DateTime.Now;
+Console.WriteLine($"Имя первого счета {tAccount.Name}");
+Console.WriteLine($"Тип первого счета {tAccount.Type}");
+Console.WriteLine($"ИД первого счета {tAccount.Id}");
+Console.WriteLine($"Балланс первого счета {tAccount.Balance}");
 
-for ( int i = 0; i < 10; i++)
-{
-    date = date.AddMonths(1);
-    Console.WriteLine($"Зарплата на {date}: {salary.GetAmountForDate(date)}");
-}
+Console.WriteLine("\n");
 
-Console.WriteLine();
+Console.WriteLine($"Имя второго счета {wallet.Name}");
+Console.WriteLine($"Тип второго счета {wallet.Type}");
+Console.WriteLine($"ИД второго счета {wallet.Id}");
+Console.WriteLine($"Балланс второго счета {wallet.Balance}");
 
-Console.WriteLine($"{bonus.Name}: {bonus.Amount} ₽");
-Console.WriteLine($"Ожидаемый: {bonus.IsExpected}");
+Console.WriteLine("\n");
+
+Console.WriteLine($"Доступный кредитный лимит {funds.AvailableCredit}");
+Console.WriteLine($"Свои средства {funds.OwnFunds}");
