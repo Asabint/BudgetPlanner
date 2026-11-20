@@ -31,10 +31,11 @@ CreditCard cCard = new CreditCard
 
 Funds funds = new Funds();
 
-funds.accounts.Add(wallet);
-funds.accounts.Add(tAccount);
+funds.Accounts.Add(wallet);
+funds.Accounts.Add(tAccount);
 
 funds.CreditCards.Add(cCard);
+funds.DebitCards.Add(dCard);
 
 Console.WriteLine($"Имя первого счета {tAccount.Name}");
 Console.WriteLine($"Тип первого счета {tAccount.Type}");
@@ -52,3 +53,9 @@ Console.WriteLine("\n");
 
 Console.WriteLine($"Доступный кредитный лимит {funds.AvailableCredit}");
 Console.WriteLine($"Свои средства {funds.OwnFunds}");
+
+Console.WriteLine("\n");
+
+Console.WriteLine($"Количество счетов {funds.Accounts.Count}"); 
+Console.WriteLine($"Количество дебетовых карт {funds.DebitCards.Count}"); 
+Console.WriteLine($"Количество кредитных карт {funds.CreditCards.Count}"); 

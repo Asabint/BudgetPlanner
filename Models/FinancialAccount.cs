@@ -8,6 +8,4 @@ public class FinancialAccount
     public string Name { get; set; } = "Unnamed";
     public FinancialAccountType Type { get; set; }
     public decimal Balance { get; set; }
-
-    public bool IsOwnFunds => true;
 }
