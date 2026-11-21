@@ -1,62 +1,151 @@
-﻿/*using BudgetPlanner.Models;
-using System.Diagnostics;
+﻿using BudgetPlanner.Models;
+using BudgetPlanner.Models.Enums;
 
-FinancialAccount tAccount = new FinancialAccount
+/*// 1. Проверка корректных значений
+
+var creditCard = new CreditCard
 {
-    Name = "T-Bank main",
-    Type = BudgetPlanner.Models.Enums.FinancialAccountType.Bank,
-    Balance = 1000,
+    Name = "Credit card",
+    CreditLimit = 50000,
+    Debt = 15000
 };
 
-FinancialAccount wallet = new FinancialAccount
+Console.WriteLine("Корректные значения:");
+Console.WriteLine($"Название: {creditCard.Name}");
+Console.WriteLine($"Кредитный лимит: {creditCard.CreditLimit}");
+Console.WriteLine($"Долг: {creditCard.Debt}");
+Console.WriteLine($"Доступный кредит: {creditCard.AvailableCredit}");
+
+Console.WriteLine();
+
+// 2. Проверка нулевых значений
+
+var emptyCard = new CreditCard
 {
-    Name = "My wallet",
-    Type = BudgetPlanner.Models.Enums.FinancialAccountType.Cash,
-    Balance = 0,
+    CreditLimit = 0,
+    Debt = 0
 };
 
-DebitCard dCard = new DebitCard
+Console.WriteLine("Проверка нулевых значений:");
+Console.WriteLine($"Кредитный лимит: {emptyCard.CreditLimit}");
+Console.WriteLine($"Долг: {emptyCard.Debt}");
+Console.WriteLine($"Доступный кредит: {emptyCard.AvailableCredit}");
+
+Console.WriteLine();
+
+// 3. Проверка некорректных значений
+
+TestInvalidValue("Отрицательный кредитный лимит", () =>
 {
-    Name = "T-Debit",
-    AccountId = tAccount.Id,
+    var card = new CreditCard
+    {
+        CreditLimit = -1000
+    };
+});
+
+TestInvalidValue("Отрицательный долг", () =>
+{
+    var card = new CreditCard
+    {
+        CreditLimit = 10000,
+        Debt = -1000
+    };
+});
+
+TestInvalidValue("Долг выше кредитного лимита", () =>
+{
+    var card = new CreditCard
+    {
+        CreditLimit = 10000,
+        Debt = 15000
+    };
+});
+
+TestInvalidValue("Уменьшение лимита ниже текущего долга", () =>
+{
+    var card = new CreditCard
+    {
+        CreditLimit = 10000,
+        Debt = 8000
+    };
+
+    card.CreditLimit = 5000;
+});*/
+
+// Метод для проверки ожидаемых исключений
+static void TestInvalidValue(string testName, Action action)
+{
+    try
+    {
+        action();
+        Console.WriteLine($"{testName} — исключение не возникло.");
+    }
+    catch (ArgumentOutOfRangeException ex)
+    {
+        Console.WriteLine($"Исключение: {testName}\nСообщение: {ex.Message}");
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine($"Исключение: {testName}\nСообщение: {ex.Message}");
+    }
+}
+
+var funds = new Funds();
+
+var acc1 = new FinancialAccount
+{
+    Name = "Test1",
+    Type = FinancialAccountType.Bank,
 };
 
-CreditCard cCard = new CreditCard
+var acc2 = new FinancialAccount
 {
-    Name = "T-credit",
-    AccountId = tAccount.Id,
-    CreditLimit = 10000,
-    Debt = 0,
+    Name = "Test2",
+    Type = FinancialAccountType.Bank,
 };
 
-Funds funds = new Funds();
+var acc3 = new FinancialAccount
+{
+    Name = "Test3",
+    Type = FinancialAccountType.Bank,
+};
 
-funds.Accounts.Add(wallet);
-funds.Accounts.Add(tAccount);
+funds.Accounts.Add( acc1 );
+funds.Accounts.Add( acc2 );
 
-funds.CreditCards.Add(cCard);
-funds.DebitCards.Add(dCard);
 
-Console.WriteLine($"Имя первого счета {tAccount.Name}");
-Console.WriteLine($"Тип первого счета {tAccount.Type}");
-Console.WriteLine($"ИД первого счета {tAccount.Id}");
-Console.WriteLine($"Балланс первого счета {tAccount.Balance}");
-
-Console.WriteLine("\n");
-
-Console.WriteLine($"Имя второго счета {wallet.Name}");
-Console.WriteLine($"Тип второго счета {wallet.Type}");
-Console.WriteLine($"ИД второго счета {wallet.Id}");
-Console.WriteLine($"Балланс второго счета {wallet.Balance} здесь в прошлый раз было -2000");
-
-Console.WriteLine("\n");
-
-Console.WriteLine($"Доступный кредитный лимит {funds.AvailableCredit}");
-Console.WriteLine($"Свои средства {funds.OwnFunds}");
-
-Console.WriteLine("\n");
-
-Console.WriteLine($"Количество счетов {funds.Accounts.Count}"); 
-Console.WriteLine($"Количество дебетовых карт {funds.DebitCards.Count}"); 
-Console.WriteLine($"Количество кредитных карт {funds.CreditCards.Count}"); 
-*/
+TestInvalidValue("Card A - acc1", () =>
+{
+    funds.AddDebitCard("A", acc1);
+    Console.WriteLine("Add card A");
+});
+TestInvalidValue("Card B - acc2", () =>
+{
+    funds.AddCreditCard("B", acc2);
+    Console.WriteLine("Add card B");
+});
+TestInvalidValue("Card C - acc1", () =>
+{
+    funds.AddDebitCard("C", acc1);
+    Console.WriteLine("Add card C");
+});
+TestInvalidValue("Card D - acc2", () =>
+{
+    funds.AddCreditCard("D", acc2);
+    Console.WriteLine("Add card D");
+});
+TestInvalidValue("Card E - acc1", () =>
+{
+    funds.AddCreditCard("E", acc1);
+    Console.WriteLine("Add card E");
+});
+TestInvalidValue("Card F - acc3", () =>
+{
+    funds.AddCreditCard("F", acc3);
+    Console.WriteLine("Add card F");
+});
+TestInvalidValue("Card G - acc2", () =>
+{
+    funds.AddDebitCard("G", acc2);
+    Console.WriteLine("Add card G");
+});

@@ -13,7 +13,8 @@ public class FinancialAccount
     public FinancialAccountType Type { get; set; }
     public decimal Balance
     {
-        get => _balance; set
+        get => _balance; 
+        set
         {
             if (value < 0)
             {
