@@ -1,7 +1,7 @@
 ﻿using BudgetPlanner.Models;
 using BudgetPlanner.Models.Enums;
 
-/*// 1. Проверка корректных значений
+/*
 
 var creditCard = new CreditCard
 {
@@ -18,7 +18,7 @@ Console.WriteLine($"Доступный кредит: {creditCard.AvailableCredit
 
 Console.WriteLine();
 
-// 2. Проверка нулевых значений
+
 
 var emptyCard = new CreditCard
 {
@@ -33,7 +33,6 @@ Console.WriteLine($"Доступный кредит: {emptyCard.AvailableCredit}
 
 Console.WriteLine();
 
-// 3. Проверка некорректных значений
 
 TestInvalidValue("Отрицательный кредитный лимит", () =>
 {
@@ -72,7 +71,6 @@ TestInvalidValue("Уменьшение лимита ниже текущего д
     card.CreditLimit = 5000;
 });*/
 
-// Метод для проверки ожидаемых исключений
 static void TestInvalidValue(string testName, Action action)
 {
     try

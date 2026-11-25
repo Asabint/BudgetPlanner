@@ -1,6 +1,6 @@
 ﻿namespace BudgetPlanner.Models.Enums;
 
-public enum IncomeFrequency
+public enum FinancialFrequency
 {
     Once,
     Weekly,

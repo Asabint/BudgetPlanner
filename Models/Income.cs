@@ -7,7 +7,7 @@ public class Income
 {
     public string Name { get; set; } = "Unknown";
     public decimal Amount { get; set; }
-    public IncomeFrequency Frequency { get; set; }
+    public FinancialFrequency Frequency { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
