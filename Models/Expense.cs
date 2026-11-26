@@ -4,17 +4,15 @@ namespace BudgetPlanner.Models;
 
 public class Expense
 {
-    private decimal _amount;
-
     public string Name { get; set; } = string.Empty;
 
     public decimal Amount
     {
-        get => _amount;
+        get;
         set
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
-            _amount = value;
+            field = value;
         }
     }
     public FinancialFrequency Frequency
@@ -41,13 +39,17 @@ public class Expense
         get;
         set
         {
+            if (value == default)
+            {
+                throw new ArgumentOutOfRangeException(nameof(StartDate));
+            }
             if (EndDate.HasValue && value.Date > EndDate.Value.Date)
             {
                 throw new ArgumentOutOfRangeException(nameof(StartDate));
             }
             field = value.Date;
         }
-    } = DateTime.Now.Date;
+    }
 
     public DateTime? EndDate
     {
@@ -66,8 +68,26 @@ public class Expense
             field = value?.Date;
         }
     }
-    
+
     public bool IsMandatory { get; set; }
 
+    public FinancialAccount? Accaunt {  get; set; }
 
+    public Expense(
+        decimal amount,
+        FinancialFrequency frequency,
+        DateTime startDate,
+        DateTime? endDate = null,
+        bool isMandatory = false,
+        string name = "",
+        FinancialAccount? accaunt = null)
+    {
+        Name = name;
+        Amount = amount;
+        Frequency = frequency;
+        StartDate = startDate;
+        EndDate = endDate;
+        IsMandatory = isMandatory;
+        Accaunt = accaunt;
+    }
 }
